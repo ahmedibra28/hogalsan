@@ -1,0 +1,358 @@
+import React, { useState, useEffect, FormEvent } from 'react'
+import dynamic from 'next/dynamic'
+import withAuth from '../HoC/withAuth'
+import { confirmAlert } from 'react-confirm-alert'
+import { useForm } from 'react-hook-form'
+import {
+  Spinner,
+  Pagination,
+  Message,
+  Confirm,
+  Search,
+  Meta,
+} from '../components'
+import {
+  DynamicFormProps,
+  dynamicInputSelect,
+  inputNumber,
+  inputText,
+  staticInputSelect,
+} from '../utils/dForms'
+import FormView from '../components/FormView'
+import { FaCheckCircle, FaPenAlt, FaTimesCircle, FaTrash } from 'react-icons/fa'
+import apiHook from '../api'
+import { IPackage } from '../models/Package'
+import { currency } from '../utils/currency'
+import { ICategory } from '../models/Category'
+
+const Packages = () => {
+  const [page, setPage] = useState(1)
+  const [id, setId] = useState<any>(null)
+  const [edit, setEdit] = useState(false)
+  const [q, setQ] = useState('')
+
+  const getApi = apiHook({
+    key: ['packages'],
+    method: 'GET',
+    url: `packages?page=${page}&q=${q}&limit=${25}`,
+  })?.get
+
+  const getCategoriesApi = apiHook({
+    key: ['category-packages'],
+    method: 'GET',
+    url: `categories?page=${page}&q=${q}&limit=${25}`,
+  })?.get
+
+  const postApi = apiHook({
+    key: ['packages'],
+    method: 'POST',
+    url: `packages`,
+  })?.post
+
+  const updateApi = apiHook({
+    key: ['packages'],
+    method: 'PUT',
+    url: `packages`,
+  })?.put
+
+  const deleteApi = apiHook({
+    key: ['packages'],
+    method: 'DELETE',
+    url: `packages`,
+  })?.deleteObj
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm({})
+
+  useEffect(() => {
+    if (postApi?.isSuccess || updateApi?.isSuccess || deleteApi?.isSuccess)
+      formCleanHandler()
+    getApi?.refetch()
+    document.getElementById('dismissModal')?.click()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [postApi?.isSuccess, updateApi?.isSuccess, deleteApi?.isSuccess])
+
+  useEffect(() => {
+    getApi?.refetch()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page])
+
+  useEffect(() => {
+    if (!q) getApi?.refetch()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [q])
+
+  const searchHandler = (e: FormEvent) => {
+    e.preventDefault()
+    getApi?.refetch()
+    setPage(1)
+  }
+
+  const editHandler = (item: IPackage) => {
+    setId(item._id)
+    setValue('duration', item?.duration)
+    setValue('feature', item?.feature)
+    setValue('label', item?.label)
+    setValue('price', item?.price)
+    setValue('company', item?.company)
+    setValue('category', item?.category?._id)
+    setValue('status', item?.status)
+
+    setEdit(true)
+  }
+
+  const deleteHandler = (id: any) => {
+    confirmAlert(Confirm(() => deleteApi?.mutateAsync(id)))
+  }
+
+  const name = 'Packages List'
+  const label = 'Package'
+  const modal = 'package'
+
+  // FormView
+  const formCleanHandler = () => {
+    reset()
+    setEdit(false)
+  }
+
+  const submitHandler = (data: object) => {
+    edit
+      ? updateApi?.mutateAsync({
+          _id: id,
+          ...data,
+        })
+      : postApi?.mutateAsync(data)
+  }
+
+  const form = [
+    <div key={0} className="col-12">
+      {staticInputSelect({
+        register,
+        errors,
+        label: 'Company',
+        name: 'company',
+        placeholder: 'Select company',
+        data: [
+          { name: 'Hormuud' },
+          { name: 'Somnet' },
+          { name: 'Somtel' },
+          { name: 'Somlink' },
+        ],
+      } as DynamicFormProps)}
+    </div>,
+    <div key={1} className="col-12">
+      {dynamicInputSelect({
+        register,
+        errors,
+        label: 'Category',
+        name: 'category',
+        value: 'name',
+        placeholder: 'Select category',
+        data: getCategoriesApi?.data?.data?.filter(
+          (item: ICategory) => item.status === 'active'
+        ),
+      } as DynamicFormProps)}
+    </div>,
+    <div key={5} className="col-12">
+      {inputText({
+        register,
+        errors,
+        label: 'Feature',
+        name: 'feature',
+        placeholder: 'Enter feature',
+      } as DynamicFormProps)}
+    </div>,
+    <div key={2} className="col-12">
+      {inputText({
+        register,
+        errors,
+        label: 'Duration',
+        name: 'duration',
+        placeholder: 'Enter duration',
+      } as DynamicFormProps)}
+    </div>,
+    <div key={3} className="col-12">
+      {inputText({
+        register,
+        errors,
+        label: 'Label',
+        name: 'label',
+        placeholder: 'Enter label',
+      } as DynamicFormProps)}
+    </div>,
+    <div key={4} className="col-12">
+      {inputNumber({
+        register,
+        errors,
+        label: 'Price',
+        name: 'price',
+        placeholder: 'Enter price',
+      } as DynamicFormProps)}
+    </div>,
+
+    <div key={7} className="col-12">
+      {staticInputSelect({
+        register,
+        errors,
+        label: 'Status',
+        name: 'status',
+        placeholder: 'Select status',
+        data: [{ name: 'active' }, { name: 'disabled' }],
+      } as DynamicFormProps)}
+    </div>,
+  ]
+
+  const modalSize = 'modal-md'
+
+  return (
+    <>
+      <Meta title="Packages" />
+
+      {deleteApi?.isSuccess && (
+        <Message
+          variant="success"
+          value={`${label} has been deleted successfully.`}
+        />
+      )}
+      {deleteApi?.isError && (
+        <Message variant="danger" value={deleteApi?.error} />
+      )}
+      {updateApi?.isSuccess && (
+        <Message
+          variant="success"
+          value={`${label} has been updated successfully.`}
+        />
+      )}
+      {updateApi?.isError && (
+        <Message variant="danger" value={updateApi?.error} />
+      )}
+      {getCategoriesApi?.isError && (
+        <Message variant="danger" value={getCategoriesApi?.error} />
+      )}
+      {postApi?.isSuccess && (
+        <Message
+          variant="success"
+          value={`${label} has been Created successfully.`}
+        />
+      )}
+      {postApi?.isError && <Message variant="danger" value={postApi?.error} />}
+
+      <div className="ms-auto text-end">
+        <Pagination data={getApi?.data} setPage={setPage} />
+      </div>
+
+      <FormView
+        edit={edit}
+        formCleanHandler={formCleanHandler}
+        form={form}
+        isLoadingUpdate={updateApi?.isLoading}
+        isLoadingPost={postApi?.isLoading}
+        handleSubmit={handleSubmit}
+        submitHandler={submitHandler}
+        modal={modal}
+        label={label}
+        modalSize={modalSize}
+      />
+
+      {getApi?.isLoading ? (
+        <Spinner />
+      ) : getApi?.isError ? (
+        <Message variant="danger" value={getApi?.error} />
+      ) : (
+        <div className="table-responsive bg-light p-3 mt-2">
+          <div className="d-flex align-items-center flex-column mb-2">
+            <h3 className="fw-light text-muted">
+              {name}
+              <sup className="fs-6"> [{getApi?.data?.total}] </sup>
+            </h3>
+            <button
+              className="btn btn-outline-primary btn-sm shadow my-2"
+              data-bs-toggle="modal"
+              data-bs-target={`#${modal}`}
+            >
+              Add New {label}
+            </button>
+            <div className="col-auto">
+              <Search
+                placeholder="Search by package name"
+                setQ={setQ}
+                q={q}
+                searchHandler={searchHandler}
+              />
+            </div>
+          </div>
+          <table className="table table-sm table-border">
+            <thead className="border-0">
+              <tr>
+                <th>Company</th>
+                <th>Category</th>
+                <th>Feature</th>
+                <th>Duration</th>
+                <th>Label</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {getApi?.data?.data?.map((item: IPackage, i: number) => (
+                <tr key={i}>
+                  <td>{item?.company}</td>
+                  <td>{item?.category?.name}</td>
+                  <td>{item?.feature}</td>
+                  <td>{item?.duration}</td>
+                  <td>{item?.label}</td>
+                  <td>{currency(item?.price)}</td>
+
+                  <td>
+                    {item?.status === 'active' ? (
+                      <FaCheckCircle className="text-success" />
+                    ) : (
+                      <FaTimesCircle className="text-danger" />
+                    )}
+                  </td>
+
+                  <td>
+                    <div className="btn-group">
+                      <button
+                        className="btn btn-primary btn-sm rounded-pill"
+                        onClick={() => editHandler(item)}
+                        data-bs-toggle="modal"
+                        data-bs-target={`#${modal}`}
+                      >
+                        <FaPenAlt />
+                      </button>
+
+                      <button
+                        className="btn btn-danger btn-sm ms-1 rounded-pill"
+                        onClick={() => deleteHandler(item._id)}
+                        disabled={deleteApi?.isLoading}
+                      >
+                        {deleteApi?.isLoading ? (
+                          <span className="spinner-border spinner-border-sm" />
+                        ) : (
+                          <span>
+                            <FaTrash />
+                          </span>
+                        )}
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </>
+  )
+}
+
+export default dynamic(() => Promise.resolve(withAuth(Packages)), {
+  ssr: false,
+})

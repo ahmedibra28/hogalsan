@@ -1,0 +1,15 @@
+.profile-dropdown .dropdown-toggle::after {
+  display: none !important;
+}
+.profile-dropdown .dropdown-toggle::before {
+  display: none !important;
+}
+
+@media (max-width: 576px) {
+  .fontSize-70 {
+    font-size: 70% !important;
+  }
+  .fontSize-90 {
+    font-size: 90% !important;
+  }
+}

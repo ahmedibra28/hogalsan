@@ -1,11 +1,13 @@
 import nc from 'next-connect'
 import { isAuth } from '../../../utils/auth'
 import Package from '../../../models/Package'
+import db from '../../../config/db'
 
 const handler = nc()
 handler.get(
   async (req: NextApiRequestExtended, res: NextApiResponseExtended) => {
     try {
+      await db()
       const q = req.query && req.query.q
 
       let query = Package.find(
@@ -15,6 +17,7 @@ handler.get(
       const page = parseInt(req.query.page) || 1
       const pageSize = parseInt(req.query.limit) || 25
       const skip = (page - 1) * pageSize
+
       const total = await Package.countDocuments(
         q ? { duration: { $regex: q, $options: 'i' } } : {}
       )
@@ -50,6 +53,7 @@ handler.use(isAuth)
 handler.post(
   async (req: NextApiRequestExtended, res: NextApiResponseExtended) => {
     try {
+      await db()
       const { category, company, duration, feature, label, status, price } =
         req.body
 

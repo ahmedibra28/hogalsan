@@ -1,0 +1,53 @@
+// const url = 'http://102.38.49.10/Admin'
+// const method = 'GET' || 'POST'
+// const authentication = 'HOGALSANAPI / K&-6kS6E'
+// const params = {
+//   page: '', // undefined
+//   OfferPurchaseByCC: '', // undefined
+//   UserID: 252640000000,
+//   API: 1,
+//   TransactionType: '', // undefined
+//   TransactionId: '', // undefined
+//   ChargeType: '', // undefined
+//   Charge: '', // undefined
+//   Reason: Data, // undefined Data
+//   OfferId: 20061,
+
+//   // POST method
+//   amount: 1,
+//   senderNumber: 61777777,
+// }
+
+// // Breare Token????
+// // Normal Token????
+
+// // Get Request Params ?????
+// // Post Request Params/Body ?????
+
+// const user = HOGALSANAPI
+// password = K&-6kS6E
+
+// // generate post request using the above params in the terminal using curl
+
+// curl --header "Content-Type: application/json" --request POST --data '{"user":"HOGALSANAPI","password":"K&-6kS6E"}' http://102.38.49.10/Admin?page=OfferPurchaseByCC&UserID=252615301507&API=1&TransactionType=1&TransactionId=1122&ChargeType=0&Charge=1&Reason=data&user=HOGALSANAPI&password="K&-6kS6E"
+
+// const params = {
+//   page: 'OfferPurchaseByCC',
+//   UserID: 252640000000,
+//   API: 1,
+//   TransactionType: 1,
+//   TransactionId: 1122,
+//   ChargeType: 0,
+//   Charge: 1,
+//   Reason: 'Data',
+//   username: 'HOGALSANAPI',
+//   password: 'K&-6kS6E',
+// }
+
+// const url = 'http://102.38.49.10/Admin'
+
+// generate a post request using the above params in the terminal using curl
+
+// curl --user mmm: -X POST -H "Content-Type: application/json" -d '{"page":"OfferPurchaseByCC","UserID":252640000000,"API":1,"TransactionType":1,"TransactionId":1122,"ChargeType":0,"Charge":1,"Reason":"Data"}' "https://102.38.49.10/Admin"
+
+// curl --user 'HOGALSANAPI':'K&-6kS6E' -X POST -H "Content-Type: application/json" -d '{"page":"OfferPurchaseByCC","UserID":252640000000,"API":1,"TransactionType":1,"TransactionId":1122,"ChargeType":0,"Charge":1,"Reason":"Data"}' "https://102.38.49.10/Admin"

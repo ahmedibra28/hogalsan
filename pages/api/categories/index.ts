@@ -1,12 +1,14 @@
 import nc from 'next-connect'
 import { isAuth } from '../../../utils/auth'
 import Category from '../../../models/Category'
+import db from '../../../config/db'
 
 const handler = nc()
 handler.use(isAuth)
 handler.get(
   async (req: NextApiRequestExtended, res: NextApiResponseExtended) => {
     try {
+      await db()
       const q = req.query && req.query.q
 
       let query = Category.find(q ? { name: { $regex: q, $options: 'i' } } : {})
@@ -42,6 +44,7 @@ handler.get(
 handler.post(
   async (req: NextApiRequestExtended, res: NextApiResponseExtended) => {
     try {
+      await db()
       const { name, status } = req.body
 
       const exist = await Category.findOne({

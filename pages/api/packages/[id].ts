@@ -1,6 +1,7 @@
 import nc from 'next-connect'
 import Package from '../../../models/Package'
 import { isAuth } from '../../../utils/auth'
+import db from '../../../config/db'
 
 const handler = nc()
 
@@ -8,6 +9,8 @@ handler.use(isAuth)
 handler.put(
   async (req: NextApiRequestExtended, res: NextApiResponseExtended) => {
     try {
+      await db()
+
       const { id } = req.query
       const { category, company, duration, feature, label, status, price } =
         req.body
@@ -43,6 +46,8 @@ handler.put(
 handler.delete(
   async (req: NextApiRequestExtended, res: NextApiResponseExtended) => {
     try {
+      await db()
+
       const { id } = req.query
       const object = await Package.findById(id)
       if (!object) return res.status(400).json({ error: `Package not found` })

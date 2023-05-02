@@ -2,12 +2,14 @@ import nc from 'next-connect'
 import { isAuth } from '../../../utils/auth'
 import Transaction from '../../../models/Transaction'
 import Package from '../../../models/Package'
+import db from '../../../config/db'
 
 const handler = nc()
 handler.use(isAuth)
 handler.get(
   async (req: NextApiRequestExtended, res: NextApiResponseExtended) => {
     try {
+      await db()
       const q = req.query && req.query.q
 
       let query = Transaction.find(

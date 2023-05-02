@@ -2,6 +2,7 @@ import nc from 'next-connect'
 import Category from '../../../models/Category'
 import { isAuth } from '../../../utils/auth'
 import Package from '../../../models/Package'
+import db from '../../../config/db'
 
 const handler = nc()
 
@@ -9,6 +10,7 @@ handler.use(isAuth)
 handler.put(
   async (req: NextApiRequestExtended, res: NextApiResponseExtended) => {
     try {
+      await db()
       const { id } = req.query
       const { name, status } = req.body
 
@@ -37,6 +39,7 @@ handler.put(
 handler.delete(
   async (req: NextApiRequestExtended, res: NextApiResponseExtended) => {
     try {
+      await db()
       const { id } = req.query
       const object = await Category.findById(id)
       if (!object) return res.status(400).json({ error: `Category not found` })

@@ -44,7 +44,6 @@ export const isAuth = async (
         (per: IPermission) => ({
           route: per?.route,
           method: per?.method,
-          auth: per?.auth,
         })
       )
 

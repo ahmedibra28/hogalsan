@@ -39,6 +39,8 @@ const Index = () => {
 
   const packages = getApi?.data?.data
     ?.filter((item: IPackage) => item.company === comp)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     ?.reduce((acc: IPacakge[], item: IPackage) => {
       const { company, category, ...rest } = item
       const index = acc.findIndex((i) => i.company === company)
@@ -113,6 +115,8 @@ const Index = () => {
                           : ''
                       }`}
                     >
+                      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+                      {/* @ts-ignore */}
                       <PackageItem item={item} />
                     </div>
                   ))}

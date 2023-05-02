@@ -4,7 +4,6 @@ import { ReactNode } from 'react'
 import Meta from './Meta'
 import SideBar from './SideBar'
 import useStore from '../zustand/useStore'
-import { useRouter } from 'next/router'
 
 type Props = {
   children: ReactNode
@@ -16,10 +15,6 @@ const Layout: React.FC<Props> = ({ children }) => {
     autoToggler: () => boolean
     userInfo: any
   }
-
-  const router = useRouter()
-
-  const { asPath } = router
 
   return (
     <div>

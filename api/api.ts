@@ -1,6 +1,10 @@
 import axios from 'axios'
 
-const baseUrl = 'http://localhost:3000/api'
+let baseUrl = 'http://localhost:3000/api'
+
+if (process.env.NODE_ENV === 'production') {
+  baseUrl = 'http://64.227.137.184/api'
+}
 
 export const userInfo = () => {
   return {

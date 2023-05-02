@@ -41,6 +41,7 @@ const Login = () => {
 
   useEffect(() => {
     userInfo && router.push('/')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router])
 
   const submitHandler = async (data: { email?: string; password?: string }) => {

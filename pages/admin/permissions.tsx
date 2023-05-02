@@ -13,13 +13,12 @@ import {
 } from '../../components'
 import {
   DynamicFormProps,
-  inputCheckBox,
   inputText,
   inputTextArea,
   staticInputSelect,
 } from '../../utils/dForms'
 import FormView from '../../components/FormView'
-import { FaCheckCircle, FaPenAlt, FaTimesCircle, FaTrash } from 'react-icons/fa'
+import { FaPenAlt, FaTrash } from 'react-icons/fa'
 import moment from 'moment'
 import apiHook from '../../api'
 import { IPermission } from '../../models/Permission'
@@ -57,7 +56,6 @@ const Permissions = () => {
   const {
     register,
     handleSubmit,
-    watch,
     setValue,
     reset,
     formState: { errors },
@@ -90,7 +88,6 @@ const Permissions = () => {
   const editHandler = (item: IPermission) => {
     setId(item._id)
     setValue('name', item?.name)
-    setValue('auth', item?.auth)
     setValue('description', item?.description)
     setValue('route', item?.route)
     setValue('method', item?.method)

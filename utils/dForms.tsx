@@ -80,7 +80,7 @@ export const AutoCompleteInput = (args: DynamicFormProps) => {
         >
           <ul className="list-inline px-2 mx-1">
             {value &&
-              data?.map((d) => (
+              data?.map((d: any) => (
                 <li
                   key={d?._id}
                   className="border border-top-0 border-start-0 border-end-0 my-1  py-1"

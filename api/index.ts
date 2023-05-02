@@ -61,6 +61,7 @@ export default function apiHook({ key, method, scrollMethod, url }: Props) {
       const infinite = useInfiniteQuery(
         key,
         ({ pageParam = 1 }) =>
+          // @ts-ignore
           api(scrollMethod, `${url}&page=${pageParam}`, {}),
         {
           getNextPageParam: (lastPage, allPages) => {

@@ -4,6 +4,7 @@ import { ReactNode } from 'react'
 import Meta from './Meta'
 import SideBar from './SideBar'
 import useStore from '../zustand/useStore'
+import CustomNav from './CustomNav'
 
 type Props = {
   children: ReactNode
@@ -19,6 +20,8 @@ const Layout: React.FC<Props> = ({ children }) => {
   return (
     <div>
       <Meta />
+      {!userInfo && <CustomNav />}
+
       {!userInfo ? (
         <>
           <div className="d-flex justify-content-between">
@@ -39,7 +42,7 @@ const Layout: React.FC<Props> = ({ children }) => {
             {toggler && <SideBar />}
 
             <main
-              className="container mt-5 py-4"
+              className="container-fluid mt-5 py-4"
               style={{
                 minHeight: 'calc(100vh - 110px)',
                 marginLeft: toggler ? 220 : 'auto',

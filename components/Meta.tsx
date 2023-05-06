@@ -11,11 +11,11 @@ interface Props {
 const Meta = (props: Props) => {
   const { pathname } = useRouter()
 
-  const title = 'Internet Provider | Hogalsan'
-  const description = 'Hogalsan is a Somali internet provider'
-  const image = 'https://www.hogalsan.com/logo.png'
-  const url = `https://www.hogalsan.com${pathname}`
-  const author = 'Hogalsan'
+  const title = 'Internet Provider | Qaranweb'
+  const description = 'Qaranweb is a Somali internet provider'
+  const image = 'https://www.qaranweb.com/logo.png'
+  const url = `https://www.qaranweb.com${pathname}`
+  const author = 'Qaranweb'
 
   return (
     <Head>
@@ -39,7 +39,7 @@ const Meta = (props: Props) => {
 
       <meta
         name="keywords"
-        content="hogalsan, hogalsan.com, https://hogalsan.com, somali internet provider, somali internet, somali internet comp"
+        content="qaranweb, qaranweb.com, https://qaranweb.com, somali internet provider, somali internet, somali internet comp"
       />
       <meta name="author" content={props?.author ? props?.author : author} />
       <meta name="publisher" content={props?.author ? props?.author : author} />
@@ -78,7 +78,7 @@ const Meta = (props: Props) => {
       />
       <meta
         itemProp="image"
-        content={props?.image ? `https://hogalsan.com${props?.image}` : image}
+        content={props?.image ? `https://qaranweb.com${props?.image}` : image}
         key="g:image"
       />
 
@@ -97,7 +97,7 @@ const Meta = (props: Props) => {
       />
       <meta
         property="og:image"
-        content={props?.image ? `https://hogalsan.com${props?.image}` : image}
+        content={props?.image ? `https://qaranweb.com${props?.image}` : image}
         key="og:image"
       />
 
@@ -115,7 +115,7 @@ const Meta = (props: Props) => {
       />
       <meta
         name="twitter:image"
-        content={props?.image ? `https://hogalsan.com${props?.image}` : image}
+        content={props?.image ? `https://qaranweb.com${props?.image}` : image}
         key="twitter:image"
       />
     </Head>

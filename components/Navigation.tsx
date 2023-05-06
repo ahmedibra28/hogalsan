@@ -18,28 +18,6 @@ const Navigation = ({ toggle }: { toggle: () => void }) => {
     userInfo: any
     logout: () => void
   }
-  // const { route } = useRouter()
-
-  // const getApi = apiHook({
-  //   key: ['routes'],
-  //   method: 'GET',
-  //   url: `auth/client-permissions/routes?id=${userInfo?._id}`,
-  // })?.get
-
-  // useEffect(() => {
-  //   if (getApi?.isSuccess && userInfo) {
-  //     typeof window !== undefined &&
-  //       localStorage.setItem(
-  //         'userInfo',
-  //         JSON.stringify({
-  //           ...userInfo,
-  //           role: getApi?.data?.role,
-  //           routes: getApi?.data?.routes,
-  //         })
-  //       )
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [getApi?.isSuccess, route])
 
   const logoutHandler = () => {
     Logout()

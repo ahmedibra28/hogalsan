@@ -13,8 +13,8 @@ const Meta = (props: Props) => {
 
   const title = 'Internet Provider | Qaranweb'
   const description = 'Qaranweb is a Somali internet provider'
-  const image = 'https://www.qaranweb.com/logo.png'
-  const url = `https://www.qaranweb.com${pathname}`
+  const image = 'https://www.internet.qaranweb.com/qaran.png'
+  const url = `https://www.internet.qaranweb.com${pathname}`
   const author = 'Qaranweb'
 
   return (
@@ -44,26 +44,26 @@ const Meta = (props: Props) => {
       <meta name="author" content={props?.author ? props?.author : author} />
       <meta name="publisher" content={props?.author ? props?.author : author} />
       <meta name="robots" content="index, follow" />
-      <link rel="icon" href="/favicon.png" />
+      <link rel="icon" href="/qaran.png" />
       <link
         rel="shortcut icon"
         type="image/vnd.microsoft.icon"
-        href="/logo.png"
+        href="/qaran.png"
       />
-      <link rel="apple-touch-icon" type="image/png" href="/logo.png" />
+      <link rel="apple-touch-icon" type="image/png" href="/qaran.png" />
       <link
         rel="apple-touch-icon"
         type="image/png"
         sizes="72x72"
-        href="/logo.png"
+        href="/qaran.png"
       />
       <link
         rel="apple-touch-icon"
         type="image/png"
         sizes="114x114"
-        href="/logo.png"
+        href="/qaran.png"
       />
-      <link rel="icon" type="image/png" href="/logo.png" />
+      <link rel="icon" type="image/png" href="/qaran.png" />
 
       {/* <!-- Google / Search Engine Tags --> */}
       <meta

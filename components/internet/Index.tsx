@@ -31,10 +31,10 @@ const Index = () => {
   })?.get
 
   const navItems = [
-    { image: '/images/hormuud.png', name: 'Hormuud' },
-    { image: '/images/somnet.png', name: 'Somnet' },
     { image: '/images/somtel.png', name: 'Somtel' },
     { image: '/images/somlink.png', name: 'Somlink' },
+    { image: '/images/hormuud.png', name: 'Hormuud' },
+    { image: '/images/somnet.png', name: 'Somnet' },
   ]
 
   const packages = getApi?.data?.data
